@@ -1,10 +1,12 @@
 package dataformats
 
-import "encoding/csv"
+import (
+	"encoding/csv"
+)
 
 type Iterator interface {
-	Next()
-	HasNext()
+	Next() []string
+	HasNext() bool
 }
 
 type RowIterator struct {
@@ -13,14 +15,17 @@ type RowIterator struct {
 	currentRow []string
 }
 
-func (r RowIterator) Next() {
-	//TODO implement me
-	panic("implement me")
+func (r *RowIterator) Next() []string {
+	return r.currentRow
 }
 
-func (r RowIterator) HasNext() {
-	//TODO implement me
-	panic("implement me")
+func (r *RowIterator) HasNext() bool {
+	record, err := r.csvReader.Read()
+	if err != nil {
+		return false
+	}
+	r.currentRow = record
+	return true
 }
 
 func NewRowIterator(reader *csv.Reader, fileFormat string) Iterator {
