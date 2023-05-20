@@ -81,3 +81,12 @@ func TestNewRowWriterCsvOk(t *testing.T) {
 	record := out.String()
 	assert.Equal(t, "foo,bar,baz\n", record)
 }
+
+func TestNewRowWriterTsvOk(t *testing.T) {
+	out := new(bytes.Buffer)
+	writer := NewRowWriter(out, "\t")
+	writer.write("foo", "bar", "baz")
+	writer.Flush()
+	record := out.String()
+	assert.Equal(t, "foo\tbar\tbaz\n", record)
+}
