@@ -14,7 +14,7 @@ foo,bar,baz
 foo,bar,baz
 `
 	records := bufio.NewReader(strings.NewReader(csvRecords))
-	iterator := NewRowIterator(records, ",")
+	iterator := NewRowReader(records, ",")
 	recordCount := 0
 	for iterator.HasNext() {
 		record := iterator.Next()
@@ -30,7 +30,7 @@ foo1	bar1	baz1
 foo2	bar2	baz2
 `
 	records := bufio.NewReader(strings.NewReader(tsvRecords))
-	iterator := NewRowIterator(records, "\t")
+	iterator := NewRowReader(records, "\t")
 
 	assert.True(t, iterator.HasNext())
 	record1 := iterator.Next()
@@ -47,7 +47,7 @@ foo1,bar1,baz1
 foo2,bar2,baz2
 `
 	records := bufio.NewReader(strings.NewReader(csvRecords))
-	iterator := NewRowIterator(records, ",")
+	iterator := NewRowReader(records, ",")
 
 	assert.True(t, iterator.HasNext())
 	record1 := iterator.Next()
@@ -61,7 +61,7 @@ foo2,bar2,baz2
 func TestHasNextOk(t *testing.T) {
 	csvRecords := `foo,bar,baz`
 	records := bufio.NewReader(strings.NewReader(csvRecords))
-	iterator := NewRowIterator(records, ",")
+	iterator := NewRowReader(records, ",")
 	recordCount := 0
 	for iterator.HasNext() {
 		record := iterator.Next()

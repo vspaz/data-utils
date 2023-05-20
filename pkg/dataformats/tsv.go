@@ -30,7 +30,7 @@ func (r *RowIterator) HasNext() bool {
 	return true
 }
 
-func NewRowIterator(in io.Reader, delimiter string) Iterator {
+func NewRowReader(in io.Reader, delimiter string) Iterator {
 	reader := csv.NewReader(in)
 	switch delimiter {
 	case "\t":
@@ -50,4 +50,20 @@ func NewRowIterator(in io.Reader, delimiter string) Iterator {
 		reader:    reader,
 		delimiter: delimiter,
 	}
+}
+
+type Writer struct {
+	writer *csv.Writer
+}
+
+func (w *Writer) write(values ...string) {
+	err := w.writer.Write(values)
+	if err != nil {
+		log.Printf("error to write to file %s '%v'", err.Error(), values)
+	}
+}
+
+func NewRowWriter(out io.Writer) *Writer {
+	writer := csv.NewWriter(out)
+	return &Writer{writer: writer}
 }
