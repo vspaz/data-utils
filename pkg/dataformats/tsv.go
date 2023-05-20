@@ -11,17 +11,16 @@ type Iterator interface {
 	HasNext() bool
 }
 
-type RowIterator struct {
+type Reader struct {
 	reader     *csv.Reader
-	delimiter  string // csv | tsv
 	currentRow []string
 }
 
-func (r *RowIterator) Next() []string {
+func (r *Reader) Next() []string {
 	return r.currentRow
 }
 
-func (r *RowIterator) HasNext() bool {
+func (r *Reader) HasNext() bool {
 	row, err := r.reader.Read()
 	if err != nil {
 		return false
@@ -46,10 +45,7 @@ func NewRowReader(in io.Reader, delimiter string) Iterator {
 	default:
 		log.Panicf("invalid delimiter '%v'; '\\t', ',', ' ', ';', '|' are only allowed", delimiter)
 	}
-	return &RowIterator{
-		reader:    reader,
-		delimiter: delimiter,
-	}
+	return &Reader{reader: reader}
 }
 
 type Writer struct {

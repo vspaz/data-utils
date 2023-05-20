@@ -45,7 +45,7 @@ func (f *File) CopyTree(src, dst string) error {
 	if err != nil {
 		return err
 	}
-	if err := os.Mkdir(dst, os.ModePerm); err != nil {
+	if err = os.Mkdir(dst, os.ModePerm); err != nil {
 		return err
 	}
 	for _, fh := range files {
@@ -57,11 +57,11 @@ func (f *File) CopyTree(src, dst string) error {
 		}
 
 		if fileInfo.IsDir() {
-			if err := f.CopyTree(srcName, dstName); err != nil {
+			if err = f.CopyTree(srcName, dstName); err != nil {
 				return err
 			}
 		} else {
-			if err := f.copyFile(srcName, dstName); err != nil {
+			if err = f.copyFile(srcName, dstName); err != nil {
 				return err
 			}
 		}

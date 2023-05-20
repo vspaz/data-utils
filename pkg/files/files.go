@@ -11,7 +11,7 @@ func MustClose(fh *os.File) {
 	}
 }
 
-func FromFile(path string) *os.File {
+func OpenFile(path string) *os.File {
 	log.Printf("trying to read file at '%s'\n", path)
 	fh, err := os.Open(path)
 	if err != nil {
