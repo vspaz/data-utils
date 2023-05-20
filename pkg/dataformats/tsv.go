@@ -2,6 +2,7 @@ package dataformats
 
 import (
 	"encoding/csv"
+	"io"
 )
 
 type Iterator interface {
@@ -10,8 +11,8 @@ type Iterator interface {
 }
 
 type RowIterator struct {
-	csvReader  *csv.Reader
-	fileFormat string // csv | tsv
+	reader     *csv.Reader
+	delimiter  string // csv | tsv
 	currentRow []string
 }
 
@@ -20,20 +21,21 @@ func (r *RowIterator) Next() []string {
 }
 
 func (r *RowIterator) HasNext() bool {
-	record, err := r.csvReader.Read()
+	row, err := r.reader.Read()
 	if err != nil {
 		return false
 	}
-	r.currentRow = record
+	r.currentRow = row
 	return true
 }
 
-func NewRowIterator(reader *csv.Reader, fileFormat string) Iterator {
-	if fileFormat == "tsv" {
+func NewRowIterator(in io.Reader, delimiter string) Iterator {
+	reader := csv.NewReader(in)
+	if delimiter == "tsv" {
 		reader.Comma = '\t'
 	}
 	return &RowIterator{
-		csvReader:  reader,
-		fileFormat: fileFormat,
+		reader:    reader,
+		delimiter: delimiter,
 	}
 }
