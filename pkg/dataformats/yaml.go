@@ -14,8 +14,8 @@ func NewYamlDecoder(in io.Reader) *YamlDecoder {
 	return &YamlDecoder{decoder: yaml.NewDecoder(in)}
 }
 
-func (y *YamlDecoder) FromYaml(body any) {
-	if err := y.decoder.Decode(body); err != nil && err != io.EOF {
+func (y *YamlDecoder) FromYaml(deserializable any) {
+	if err := y.decoder.Decode(deserializable); err != nil && err != io.EOF {
 		log.Fatalf("error decoding yaml %s", err)
 	}
 }
@@ -28,8 +28,8 @@ func NewYamlEncoder(out io.Writer) *YamlEncoder {
 	return &YamlEncoder{encoder: yaml.NewEncoder(out)}
 }
 
-func (y *YamlEncoder) ToYaml(body any) {
-	err := y.encoder.Encode(body)
+func (y *YamlEncoder) ToYaml(serializable any) {
+	err := y.encoder.Encode(serializable)
 	if err != nil {
 		log.Fatalf("error encoding yaml %s", err)
 	}
