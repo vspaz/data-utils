@@ -11,6 +11,14 @@ func MustClose(fh *os.File) {
 	}
 }
 
+func FromFile(path string) string {
+	fileContents, err := os.ReadFile(path)
+	if err != nil {
+		log.Fatalf("error reading file '%s %s'", path, err)
+	}
+	return string(fileContents)
+}
+
 func OpenFile(path string) *os.File {
 	log.Printf("trying to read file at '%s'\n", path)
 	fh, err := os.Open(path)
