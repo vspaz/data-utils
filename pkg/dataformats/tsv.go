@@ -63,7 +63,21 @@ func (w *Writer) write(values ...string) {
 	}
 }
 
-func NewRowWriter(out io.Writer) *Writer {
+func NewRowWriter(out io.Writer, delimiter string) *Writer {
 	writer := csv.NewWriter(out)
+	switch delimiter {
+	case "\t":
+		writer.Comma = '\t'
+	case ",":
+		writer.Comma = ','
+	case " ":
+		writer.Comma = ' '
+	case ";":
+		writer.Comma = ';'
+	case "|":
+		writer.Comma = '|'
+	default:
+		log.Panicf("invalid delimiter '%v'; '\\t', ',', ' ', ';', '|' are only allowed", delimiter)
+	}
 	return &Writer{writer: writer}
 }
