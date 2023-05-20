@@ -7,6 +7,23 @@ import (
 	"testing"
 )
 
+func TestNewRowIteratorOk(t *testing.T) {
+	csvRecords := `
+foo,bar,baz
+foo,bar,baz
+foo,bar,baz
+`
+	records := bufio.NewReader(strings.NewReader(csvRecords))
+	iterator := NewRowIterator(records, ",")
+	recordCount := 0
+	for iterator.HasNext() {
+		record := iterator.Next()
+		assert.Equal(t, []string{"foo", "bar", "baz"}, record)
+		recordCount++
+	}
+	assert.Equal(t, 3, recordCount)
+}
+
 func TestNewRowIteratorTsvOk(t *testing.T) {
 	tsvRecords := `
 foo1	bar1	baz1
