@@ -13,7 +13,7 @@ foo1	bar1	baz1
 foo2	bar2	baz2
 `
 	records := bufio.NewReader(strings.NewReader(tsvRecords))
-	iterator := NewRowIterator(records, "tsv")
+	iterator := NewRowIterator(records, "\t")
 
 	assert.True(t, iterator.HasNext())
 	record1 := iterator.Next()
@@ -30,7 +30,7 @@ foo1,bar1,baz1
 foo2,bar2,baz2
 `
 	records := bufio.NewReader(strings.NewReader(csvRecords))
-	iterator := NewRowIterator(records, "csv")
+	iterator := NewRowIterator(records, ",")
 
 	assert.True(t, iterator.HasNext())
 	record1 := iterator.Next()

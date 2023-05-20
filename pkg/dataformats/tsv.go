@@ -3,6 +3,7 @@ package dataformats
 import (
 	"encoding/csv"
 	"io"
+	"log"
 )
 
 type Iterator interface {
@@ -31,8 +32,19 @@ func (r *RowIterator) HasNext() bool {
 
 func NewRowIterator(in io.Reader, delimiter string) Iterator {
 	reader := csv.NewReader(in)
-	if delimiter == "tsv" {
+	switch delimiter {
+	case "\t":
 		reader.Comma = '\t'
+	case ",":
+		reader.Comma = ','
+	case " ":
+		reader.Comma = ' '
+	case ";":
+		reader.Comma = ';'
+	case "|":
+		reader.Comma = '|'
+	default:
+		log.Panicf("invalid delimiter '%v'; '\\t', ',', ' ', ';', '|' are only allowed", delimiter)
 	}
 	return &RowIterator{
 		reader:    reader,
