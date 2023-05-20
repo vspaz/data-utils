@@ -24,20 +24,6 @@ foo,bar,baz
 	assert.Equal(t, 3, recordCount)
 }
 
-func TestHasNextOk(t *testing.T) {
-	csvRecords := `foo,bar,baz`
-	records := bufio.NewReader(strings.NewReader(csvRecords))
-	iterator := NewRowIterator(records, ",")
-	recordCount := 0
-	for iterator.HasNext() {
-		record := iterator.Next()
-		assert.Equal(t, []string{"foo", "bar", "baz"}, record)
-		recordCount++
-	}
-	assert.False(t, iterator.HasNext())
-	assert.Equal(t, 1, recordCount)
-}
-
 func TestNewRowIteratorTsvOk(t *testing.T) {
 	tsvRecords := `
 foo1	bar1	baz1
@@ -70,4 +56,18 @@ foo2,bar2,baz2
 	assert.True(t, iterator.HasNext())
 	record2 := iterator.Next()
 	assert.Equal(t, []string{"foo2", "bar2", "baz2"}, record2)
+}
+
+func TestHasNextOk(t *testing.T) {
+	csvRecords := `foo,bar,baz`
+	records := bufio.NewReader(strings.NewReader(csvRecords))
+	iterator := NewRowIterator(records, ",")
+	recordCount := 0
+	for iterator.HasNext() {
+		record := iterator.Next()
+		assert.Equal(t, []string{"foo", "bar", "baz"}, record)
+		recordCount++
+	}
+	assert.False(t, iterator.HasNext())
+	assert.Equal(t, 1, recordCount)
 }
