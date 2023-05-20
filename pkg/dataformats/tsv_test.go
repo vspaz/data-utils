@@ -2,6 +2,7 @@ package dataformats
 
 import (
 	"bufio"
+	"bytes"
 	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
@@ -70,4 +71,13 @@ func TestHasNextOk(t *testing.T) {
 	}
 	assert.False(t, iterator.HasNext())
 	assert.Equal(t, 1, recordCount)
+}
+
+func TestNewRowWriterCsvOk(t *testing.T) {
+	out := new(bytes.Buffer)
+	writer := NewRowWriter(out, ",")
+	writer.write("foo", "bar", "baz")
+	writer.Flush()
+	record := out.String()
+	assert.Equal(t, "foo,bar,baz\n", record)
 }

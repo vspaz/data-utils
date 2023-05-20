@@ -63,6 +63,10 @@ func (w *Writer) write(values ...string) {
 	}
 }
 
+func (w *Writer) Flush() {
+	w.writer.Flush()
+}
+
 func NewRowWriter(out io.Writer, delimiter string) *Writer {
 	writer := csv.NewWriter(out)
 	switch delimiter {
