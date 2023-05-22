@@ -34,12 +34,3 @@ func (j *JsonEncoder) ToJson(serializable any) {
 		log.Fatalf("error encoding json %s", err)
 	}
 }
-
-func FromJson(deserializable []byte, deserialized any) error {
-	return json.Unmarshal(deserializable, deserialized)
-}
-
-func ToJson(serializable any) []byte {
-	encodedMessage, _ := json.Marshal(serializable)
-	return encodedMessage
-}
