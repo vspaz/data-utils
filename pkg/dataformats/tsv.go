@@ -52,7 +52,7 @@ type Writer struct {
 	writer *csv.Writer
 }
 
-func (w *Writer) write(values ...string) {
+func (w *Writer) Write(values ...string) {
 	err := w.writer.Write(values)
 	if err != nil {
 		log.Printf("error to write to file %s '%v'", err.Error(), values)
