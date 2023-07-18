@@ -38,5 +38,5 @@ func TestNewYamlEncoderOk(t *testing.T) {
 	out := new(bytes.Buffer)
 	encoder := NewYamlEncoder(out)
 	encoder.ToYaml(tempHolder)
-	assert.Equal(t, "foo: 10\nbar:\n- foo\n- bar\n- baz\n", out.String())
+	assert.Equal(t, "foo: 10\nbar:\n  - foo\n  - bar\n  - baz\n", out.String())
 }
