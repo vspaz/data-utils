@@ -25,7 +25,9 @@ type YamlEncoder struct {
 }
 
 func NewYamlEncoder(out io.Writer) *YamlEncoder {
-	return &YamlEncoder{encoder: yaml.NewEncoder(out)}
+	encoder := yaml.NewEncoder(out)
+	encoder.SetIndent(2)
+	return &YamlEncoder{encoder: encoder}
 }
 
 func (y *YamlEncoder) ToYaml(serializable any) {
