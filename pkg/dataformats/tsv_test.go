@@ -76,8 +76,8 @@ func TestHasNextOk(t *testing.T) {
 func TestNewRowWriterOk(t *testing.T) {
 	out := new(bytes.Buffer)
 	writer := NewRowWriter(out, "\t")
-	writer.write("foo1", "bar1", "baz1")
-	writer.write("foo2", "bar2", "baz2")
+	writer.Write("foo1", "bar1", "baz1")
+	writer.Write("foo2", "bar2", "baz2")
 	writer.Flush()
 	record := out.String()
 	assert.Equal(t, "foo1\tbar1\tbaz1\nfoo2\tbar2\tbaz2\n", record)
@@ -86,7 +86,7 @@ func TestNewRowWriterOk(t *testing.T) {
 func TestNewRowWriterCsvOk(t *testing.T) {
 	out := new(bytes.Buffer)
 	writer := NewRowWriter(out, ",")
-	writer.write("foo", "bar", "baz")
+	writer.Write("foo", "bar", "baz")
 	writer.Flush()
 	record := out.String()
 	assert.Equal(t, "foo,bar,baz\n", record)
@@ -95,7 +95,7 @@ func TestNewRowWriterCsvOk(t *testing.T) {
 func TestNewRowWriterTsvOk(t *testing.T) {
 	out := new(bytes.Buffer)
 	writer := NewRowWriter(out, "\t")
-	writer.write("foo", "bar", "baz")
+	writer.Write("foo", "bar", "baz")
 	writer.Flush()
 	record := out.String()
 	assert.Equal(t, "foo\tbar\tbaz\n", record)
