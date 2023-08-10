@@ -60,6 +60,7 @@ func (fs *FileSystem) CopyTree(src, dst string) error {
 			if err = fs.CopyTree(srcName, dstName); err != nil {
 				return err
 			}
+			return nil
 		}
 		if err = fs.CopyFile(srcName, dstName); err != nil {
 			return err
