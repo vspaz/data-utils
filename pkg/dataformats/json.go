@@ -25,7 +25,10 @@ type JsonEncoder struct {
 }
 
 func NewJsonEncoder(out io.Writer) *JsonEncoder {
-	return &JsonEncoder{encoder: json.NewEncoder(out)}
+	encoder := json.NewEncoder(out)
+	encoder.SetIndent("", "  ")
+	encoder.SetEscapeHTML(false)
+	return &JsonEncoder{encoder: encoder}
 }
 
 func (j *JsonEncoder) ToJson(serializable any) {
