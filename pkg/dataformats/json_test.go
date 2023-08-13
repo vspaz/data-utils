@@ -21,5 +21,5 @@ func TestNewJsonEncoderOk(t *testing.T) {
 	out := new(bytes.Buffer)
 	encoder := NewJsonEncoder(out)
 	encoder.ToJson(map[string]int{"foo": 10})
-	assert.Equal(t, "{\"foo\":10}\n", out.String())
+	assert.Equal(t, "{\n  \"foo\": 10\n}\n", out.String())
 }
