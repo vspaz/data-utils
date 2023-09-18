@@ -40,3 +40,21 @@ func TestNewYamlEncoderOk(t *testing.T) {
 	encoder.ToYaml(tempHolder)
 	assert.Equal(t, "foo: 10\nbar:\n  - foo\n  - bar\n  - baz\n", out.String())
 }
+
+func TestCustomDateMarshalOk(t *testing.T) {
+	type TestStandardMarshaller struct {
+		Date string `yaml:"date"`
+	}
+	out := new(bytes.Buffer)
+	encoder := NewYamlEncoder(out)
+	encoder.ToYaml(&TestStandardMarshaller{Date: "2006-01-02"})
+	assert.Equal(t, "date: \"2006-01-02\"\n", out.String())
+	out.Reset()
+
+	type TestCustomerMarshaller struct {
+		Date CustomDate `yaml:"date"`
+	}
+	encoder = NewYamlEncoder(out)
+	encoder.ToYaml(&TestCustomerMarshaller{Date: "2006-01-02"})
+	assert.Equal(t, "date: 2006-01-02\n", out.String())
+}

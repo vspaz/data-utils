@@ -24,6 +24,18 @@ type YamlEncoder struct {
 	encoder *yaml.Encoder
 }
 
+type CustomDate string
+
+// this is a custom yaml date murshaller to avoid wrapping strings that contain characters
+// :, {, }, [, ], ,, &, *, #, ?, |, -, <, >, =, !, %, @, ` with double qoutes:
+func (c CustomDate) MarshalYAML() (any, error) {
+	return yaml.Node{
+		Kind:  yaml.ScalarNode,
+		Style: yaml.FlowStyle,
+		Value: string(c),
+	}, nil
+}
+
 func NewYamlEncoder(out io.Writer) *YamlEncoder {
 	encoder := yaml.NewEncoder(out)
 	encoder.SetIndent(2)
