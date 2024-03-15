@@ -25,6 +25,28 @@ foo,bar,baz
 	assert.Equal(t, 3, recordCount)
 }
 
+func BenchmarkNewRowIterator(b *testing.B) {
+	csvRecords := `
+1,foo,bar,baz
+2,foo,bar,baz
+3,foo,bar,baz
+4,foo,bar,baz
+5,foo,bar,baz
+6,foo,bar,baz
+7,foo,bar,baz
+8,foo,bar,baz
+9,foo,bar,baz
+10,foo,bar,baz
+`
+	records := bufio.NewReader(strings.NewReader(csvRecords))
+	for i := 0; i < b.N; i++ {
+		iterator := NewRowReader(records, ",")
+		for iterator.HasNext() {
+			_ = iterator.Next()
+		}
+	}
+}
+
 func TestNewRowIteratorTsvOk(t *testing.T) {
 	tsvRecords := `
 foo1	bar1	baz1
