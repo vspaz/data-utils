@@ -1,11 +1,3 @@
-# data-utils
-A small Go module for working with various data formats.
-
-## CSV
-
-### Writing to TSV file
-
-```go
 package main
 
 import (
@@ -18,9 +10,9 @@ func writeTsvFile() {
 	dumpFile := filesystem.CreateFile("dump.tsv")
 	defer filesystem.MustClose(dumpFile)
 
-	csvWriter := dataformats.NewRowWriter(dumpFile, ",")  // any of {"\t", ",", " ", ";", "|"}
-	csvWriter.Write("value1", "value2", "value3")
-	csvWriter.Write("value4", "value5", "value6")
+	csvWriter := dataformats.NewRowWriter(dumpFile, ",")
+	csvWriter.Write("value1", "value2")
+	csvWriter.Write("value3", "value4")
 	csvWriter.Flush()
 }
 
@@ -28,10 +20,10 @@ func readTsvFile() {
 	fh := filesystem.OpenFile("dump.tsv")
 	defer filesystem.MustClose(fh)
 
-	csvReader := dataformats.NewRowReader(fh, ",")  // any of {"\t", ",", " ", ";", "|"}
+	csvReader := dataformats.NewRowReader(fh, ",")
 	for csvReader.HasNext() {
 		row := csvReader.Next()
-		fmt.Println(row[0], row[1], row[2])
+		fmt.Println(row[0], row[1])
 	}
 }
 
@@ -39,5 +31,3 @@ func main() {
 	writeTsvFile()
 	readTsvFile()
 }
-```
-
