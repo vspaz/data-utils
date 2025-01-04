@@ -1,9 +1,9 @@
 # data-utils
 A small Go module for working with various data formats.
 
-## CSV
+## Delimited text files (CSV, TSV etc.)
 
-### Writing to TSV file
+### Writing to CSV file
 
 ```go
 package main
@@ -24,6 +24,18 @@ func writeTsvFile() {
 	csvWriter.Flush()
 }
 
+```
+### Reading from a CSV file
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/vspaz/data-utils/pkg/dataformats"
+	"github.com/vspaz/data-utils/pkg/filesystem"
+)
+
 func readTsvFile() {
 	fh := filesystem.OpenFile("dump.tsv")
 	defer filesystem.MustClose(fh)
@@ -35,9 +47,5 @@ func readTsvFile() {
 	}
 }
 
-func main() {
-	writeTsvFile()
-	readTsvFile()
-}
 ```
 
