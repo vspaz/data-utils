@@ -105,9 +105,9 @@ func readYamlFile() {
 	defer filesystem.MustClose(fh)
 
 	decoder := dataformats.NewYamlDecoder(fh)
-	someStruct := &MyStruct{}
-	decoder.FromYaml(someStruct)
-	fmt.Println(someStruct.Content)
+	data := &MyStruct{}
+	decoder.FromYaml(data)
+	fmt.Println(data.Content)
 }
 
 ```
