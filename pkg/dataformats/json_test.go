@@ -9,6 +9,7 @@ import (
 )
 
 func TestNewJsonDecoderOk(t *testing.T) {
+	t.Parallel()
 	jsonString := `{"foo":10}`
 	reader := bufio.NewReader(strings.NewReader(jsonString))
 	decoder := NewJsonDecoder(reader)
@@ -18,6 +19,7 @@ func TestNewJsonDecoderOk(t *testing.T) {
 }
 
 func TestNewJsonEncoderOk(t *testing.T) {
+	t.Parallel()
 	out := new(bytes.Buffer)
 	encoder := NewJsonEncoder(out)
 	encoder.ToJson(map[string]int{"foo": 10})

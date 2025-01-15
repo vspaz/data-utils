@@ -27,6 +27,7 @@ bar:
 }
 
 func TestNewYamlEncoderOk(t *testing.T) {
+	t.Parallel()
 	type TestObject struct {
 		Foo int      `yaml:"foo"`
 		Bar []string `yaml:"bar"`
@@ -42,6 +43,7 @@ func TestNewYamlEncoderOk(t *testing.T) {
 }
 
 func TestCustomDateMarshalOk(t *testing.T) {
+	t.Parallel()
 	type TestStandardMarshaller struct {
 		Date string `yaml:"date"`
 	}

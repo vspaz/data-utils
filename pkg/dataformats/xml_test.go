@@ -29,6 +29,7 @@ var xmlText = `<?xml version="1.0" encoding="UTF-8"?>
 	</users>`
 
 func TestXmlDecoderOk(t *testing.T) {
+	t.Parallel()
 	reader := bufio.NewReader(strings.NewReader(xmlText))
 	decoder := NewXmlDecoder(reader)
 	users := Users{}
@@ -37,6 +38,7 @@ func TestXmlDecoderOk(t *testing.T) {
 }
 
 func TestXmlEncoderOk(t *testing.T) {
+	t.Parallel()
 	out := new(bytes.Buffer)
 	encoder := NewXmlEncoder(out)
 	encoder.ToXml(User{ID: 138, Login: "johndoe", Name: "Doe"})

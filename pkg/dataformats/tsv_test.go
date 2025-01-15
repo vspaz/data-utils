@@ -9,6 +9,7 @@ import (
 )
 
 func TestNewRowIteratorOk(t *testing.T) {
+	t.Parallel()
 	csvRecords := `
 foo,bar,baz
 foo,bar,baz
@@ -48,6 +49,7 @@ func BenchmarkNewRowIterator(b *testing.B) {
 }
 
 func TestNewRowIteratorTsvOk(t *testing.T) {
+	t.Parallel()
 	tsvRecords := `
 foo1	bar1	baz1
 foo2	bar2	baz2
@@ -65,6 +67,7 @@ foo2	bar2	baz2
 }
 
 func TestNewRowIteratorCsvOk(t *testing.T) {
+	t.Parallel()
 	csvRecords := `
 foo1,bar1,baz1
 foo2,bar2,baz2
@@ -82,6 +85,7 @@ foo2,bar2,baz2
 }
 
 func TestHasNextOk(t *testing.T) {
+	t.Parallel()
 	csvRecords := `foo,bar,baz`
 	records := bufio.NewReader(strings.NewReader(csvRecords))
 	iterator := NewRowReader(records, ",")
@@ -96,6 +100,7 @@ func TestHasNextOk(t *testing.T) {
 }
 
 func TestNewRowWriterOk(t *testing.T) {
+	t.Parallel()
 	out := new(bytes.Buffer)
 	writer := NewRowWriter(out, "\t")
 	writer.Write("foo1", "bar1", "baz1")
@@ -106,6 +111,7 @@ func TestNewRowWriterOk(t *testing.T) {
 }
 
 func TestNewRowWriterCsvOk(t *testing.T) {
+	t.Parallel()
 	out := new(bytes.Buffer)
 	writer := NewRowWriter(out, ",")
 	writer.Write("foo", "bar", "baz")
@@ -115,6 +121,7 @@ func TestNewRowWriterCsvOk(t *testing.T) {
 }
 
 func TestNewRowWriterTsvOk(t *testing.T) {
+	t.Parallel()
 	out := new(bytes.Buffer)
 	writer := NewRowWriter(out, "\t")
 	writer.Write("foo", "bar", "baz")
