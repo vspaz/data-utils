@@ -39,6 +39,6 @@ func TestXmlDecoderOk(t *testing.T) {
 func TestXmlEncoderOk(t *testing.T) {
 	out := new(bytes.Buffer)
 	encoder := NewXmlEncoder(out)
-	encoder.toXml(User{ID: 138, Login: "johndoe", Name: "Doe"})
+	encoder.ToXml(User{ID: 138, Login: "johndoe", Name: "Doe"})
 	assert.Equal(t, "<User id=\"138\">\n <login>johndoe</login>\n <name>Doe</name>\n</User>", out.String())
 }

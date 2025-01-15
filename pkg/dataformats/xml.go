@@ -30,7 +30,7 @@ func NewXmlEncoder(out io.Writer) *XmlEncoder {
 	return &XmlEncoder{encoder: encoder}
 }
 
-func (x *XmlEncoder) toXml(serializable any) {
+func (x *XmlEncoder) ToXml(serializable any) {
 	err := x.encoder.Encode(serializable)
 	if err != nil {
 		log.Fatalf("error encoding XML: %s", err)
