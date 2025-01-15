@@ -4,7 +4,7 @@ A small simple-to-use Go module for working with various data formats.
 
 ## Delimited text files (CSV, TSV etc.)
 
-### Writing to a CSV file
+### Writing to an CSV file
 
 ```go
 package main
@@ -27,7 +27,7 @@ func writeTsvFile() {
 
 ```
 
-### Reading from a CSV file
+### Reading a CSV file
 
 ```go
 package main
@@ -83,7 +83,7 @@ func writeYamlFile() {
 
 ```
 
-### Reading from a yaml file
+### Reading a yaml file
 
 ```go
 package main
@@ -109,7 +109,6 @@ func readYamlFile() {
 	decoder.FromYaml(data)
 	fmt.Println(data.Content)
 }
-
 ```
 
 ### Writing to a json file
@@ -143,7 +142,7 @@ func writeJsonFile() {
 }
 ```
 
-### Reading from a json file
+### Reading a json file
 
 ```go
 package main
@@ -169,5 +168,75 @@ func readJsonFile() {
 	decoder.FromJson(data)
 	fmt.Println(data.Content)
 }
+```
 
+### Writing to an XML file
+
+```go
+package main
+
+import (
+	"encoding/xml"
+	"fmt"
+	"github.com/vspaz/data-utils/pkg/dataformats"
+	"github.com/vspaz/data-utils/pkg/filesystem"
+)
+
+type Users struct {
+	XMLName xml.Name `xml:"users"`
+	Users   []User   `xml:"user"`
+}
+
+type User struct {
+	ID    int    `xml:"id,attr"`
+	Login string `xml:"login"`
+	Name  string `xml:"name"`
+}
+
+func writeXmlFile() {
+	dumpFile := filesystem.CreateFile("dump.xml")
+	defer filesystem.MustClose(dumpFile)
+
+	encoder := dataformats.NewXmlEncoder(dumpFile)
+	users := Users{
+		Users: []User{
+			{1, "John Doe", "Doe"},
+		},
+	}
+	encoder.ToXml(users)
+}
+```
+
+### Reading an XML file
+
+```go
+package main
+
+import (
+	"encoding/xml"
+	"fmt"
+	"github.com/vspaz/data-utils/pkg/dataformats"
+	"github.com/vspaz/data-utils/pkg/filesystem"
+)
+
+type Users struct {
+	XMLName xml.Name `xml:"users"`
+	Users   []User   `xml:"user"`
+}
+
+type User struct {
+	ID    int    `xml:"id,attr"`
+	Login string `xml:"login"`
+	Name  string `xml:"name"`
+}
+
+func readXmlFile() {
+	fh := filesystem.OpenFile("dump.xml")
+	defer filesystem.MustClose(fh)
+
+	decoder := dataformats.NewXmlDecoder(fh)
+	users := &Users{}
+	decoder.FromXml(users)
+	fmt.Println(users.Users[0].Name)
+}
 ```

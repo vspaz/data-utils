@@ -18,14 +18,6 @@ type User struct {
 	Name  string `xml:"name"`
 }
 
-var xmlText = `<?xml version="1.0" encoding="UTF-8"?>
-	<users>
-		<user id="138">
-			<login>johndoe</login>
-			<name>Doe</name>
-		</user>
-	</users>`
-
 func writeXmlFile() {
 	dumpFile := filesystem.CreateFile("dump.xml")
 	defer filesystem.MustClose(dumpFile)
