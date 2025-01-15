@@ -7,7 +7,7 @@ import (
 )
 
 // copytree provides similar functionality to Python shutil.copytree
-// https://docs.python.org/3.11/library/shutil.html#shutil.copytree
+// https://docs.python.org/3.13/library/shutil.html#shutil.copytree
 
 // FileSystem FileSystem implements a FileSystem interface.
 type FileSystem struct{}
