@@ -16,7 +16,7 @@ func writeJsonFile() {
 	dumpFile := filesystem.CreateFile("dump.json")
 	defer filesystem.MustClose(dumpFile)
 
-	encoder := dataformats.NewJsonEncoder(dumpFile)
+	encoder := dataformats.NewJsonEncoder(dumpFile, "  ", false)
 	data := MyStruct{
 		Content: "some content goes here",
 		Config:  map[string]string{"foo": "bar"},
