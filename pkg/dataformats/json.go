@@ -24,10 +24,10 @@ type JsonEncoder struct {
 	encoder *json.Encoder
 }
 
-func NewJsonEncoder(out io.Writer) *JsonEncoder {
+func NewJsonEncoder(out io.Writer, indent string, escapeHtml bool) *JsonEncoder {
 	encoder := json.NewEncoder(out)
-	encoder.SetIndent("", "  ")
-	encoder.SetEscapeHTML(false)
+	encoder.SetIndent("", indent)
+	encoder.SetEscapeHTML(escapeHtml)
 	return &JsonEncoder{encoder: encoder}
 }
 
