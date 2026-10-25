@@ -1,38 +1,46 @@
 package dataformats
 
 import (
-	"encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"io"
 	"log"
 )
 
 type JsonDecoder struct {
-	decoder *json.Decoder
+	decoder *jsontext.Decoder
 }
 
 func NewJsonDecoder(in io.Reader) *JsonDecoder {
-	return &JsonDecoder{decoder: json.NewDecoder(in)}
+	return &JsonDecoder{decoder: jsontext.NewDecoder(in)}
 }
 
 func (j *JsonDecoder) FromJson(deserializable any) {
-	if err := j.decoder.Decode(deserializable); err != nil && err != io.EOF {
+	if err := json.UnmarshalDecode(j.decoder, &deserializable); err != nil && err != io.EOF {
 		log.Fatalf("error decoding json %s", err)
 	}
 }
 
 type JsonEncoder struct {
-	encoder *json.Encoder
+	encoder *jsontext.Encoder
 }
 
 func NewJsonEncoder(out io.Writer, indent string, escapeHtml bool) *JsonEncoder {
-	encoder := json.NewEncoder(out)
-	encoder.SetIndent("", indent)
-	encoder.SetEscapeHTML(escapeHtml)
-	return &JsonEncoder{encoder: encoder}
+	encoder := jsontext.NewEncoder(
+		out,
+		jsontext.WithIndent(indent),
+		jsontext.EscapeForHTML(escapeHtml),
+	)
+	return &JsonEncoder{
+		encoder: encoder,
+	}
 }
 
 func (j *JsonEncoder) ToJson(serializable any) {
-	err := j.encoder.Encode(serializable)
+	err := json.MarshalEncode(
+		j.encoder,
+		serializable,
+	)
 	if err != nil {
 		log.Fatalf("error encoding json %s", err)
 	}
